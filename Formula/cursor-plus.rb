@@ -11,8 +11,10 @@ class CursorPlus < Formula
   depends_on "whisper-cpp"
 
   def install
-    # Install into libexec so node_modules + binaries land next to each other.
-    system "npm", "install", "--prefix", libexec, "."
+    # Install from the npm registry (not from the local tarball) so the
+    # bin shim resolves to a real node_modules/cursor-plus directory
+    # rather than a symlink into a brew-temp scratch dir.
+    system "npm", "install", "--prefix", libexec, "cursor-plus@0.1.4"
 
     # npm --prefix installs the package into libexec/node_modules/<pkg> and
     # creates bin shims in libexec/node_modules/.bin. Symlink them into
