@@ -13,7 +13,6 @@ class CursorPlus < Formula
   def install
     # Install into libexec so node_modules + binaries land next to each other.
     system "npm", "install", "--prefix", libexec, "."
-    libexec.install_symlink "bin" → "vendor-bin" unless (libexec/"vendor-bin").exist?
     bin.install_symlink Dir["#{libexec}/bin/*"]
 
     # node-pty ships a prebuilt spawn-helper without the executable bit on
