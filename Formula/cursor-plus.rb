@@ -13,7 +13,11 @@ class CursorPlus < Formula
   def install
     # Install into libexec so node_modules + binaries land next to each other.
     system "npm", "install", "--prefix", libexec, "."
-    bin.install_symlink Dir["#{libexec}/bin/*"]
+
+    # npm --prefix installs the package into libexec/node_modules/<pkg> and
+    # creates bin shims in libexec/node_modules/.bin. Symlink them into
+    # Homebrew's bin/ so `cursor+` ends up on PATH.
+    bin.install_symlink Dir["#{libexec}/node_modules/.bin/*"]
 
     # node-pty ships a prebuilt spawn-helper without the executable bit on
     # macOS / Linux. Mirror copilot-plus and chmod it as part of install so
